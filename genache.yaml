@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  ganache:
+    command: --accounts 10 --db_path /blockdata --seed "your-seed-phrase-here" --hardfork petersburg
+    ports:
+      - '8545:8545'
+    image: 'trufflesuite/ganache:rc'
+    volumes:
+      - ./blockdata:/blockdata
