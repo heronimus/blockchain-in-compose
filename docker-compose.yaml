@@ -6,7 +6,7 @@ volumes:
   postgres-data:
 services:
   ganache:
-    command: --accounts 10 --db_path /blockdata --seed "your-seed-phrase-here" --hardfork petersburg
+    command: --accounts 10 --db_path /blockdata --seed "${GANACHE_SEED_PHRASE}" --hardfork petersburg
     ports:
       - '8545:8545'
     image: 'trufflesuite/ganache:rc'
@@ -19,16 +19,16 @@ services:
     image: 'heronimus/blockscout:devnet'
     environment:
       MIX_ENV: prod
-      DATABASE_URL: postgresql://postgres:@172.17.0.1:5432/explorer?ssl: false
+      DATABASE_URL: postgresql://postgres:@blockscout-postgres:5432/explorer?ssl: false
       ETHEREUM_JSONRPC_VARIANT: ganache
-      ETHEREUM_JSONRPC_HTTP_URL: http://172.17.0.1:8545
-      ETHEREUM_JSONRPC_WS_URL: ws://172.17.0.1:8545
+      ETHEREUM_JSONRPC_HTTP_URL: http://ganache:8545
+      ETHEREUM_JSONRPC_WS_URL: ws://ganache:8545
       COIN: POO
       MIX_HOME: /opt/mix
       HEX_HOME: /opt/hex
       PORT: 4000
-      SECRET_KEY_BASE: XXXXX-YOUR-SECRET-KEY-BASE
-  postgres:
+      SECRET_KEY_BASE: ${BLOCKSCOUT_SECRET_KEY_BASE}
+  blockscout-postgres:
     command: postgres
     ports:
       - '5432:5432'
