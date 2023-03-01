@@ -30,8 +30,8 @@ services:
       SECRET_KEY_BASE: ${BLOCKSCOUT_SECRET_KEY_BASE}
   blockscout-postgres:
     command: postgres
-    ports:
-      - '5432:5432'
+    # ports:
+    #   - '5432:5432'
     image: 'postgres:12.5'
     environment:
       POSTGRES_USER: postgres
